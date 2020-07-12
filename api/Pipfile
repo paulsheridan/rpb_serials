@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+
+[packages]
+flask = "*"
+flask-graphql = "*"
+flask-migrate = "*"
+flask-sqlalchemy = "*"
+graphene = "*"
+graphene-sqlalchemy = "*"
+psycopg2-binary = "*"
+flask-cors = "*"
+
+[requires]
+python_version = "3.6"
