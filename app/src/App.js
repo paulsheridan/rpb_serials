@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Redirect, Link, withRouter } from "react-router-d
 import Cookies from "js-cookie"
 
 import googleAuth from "./googleAuth";
-import Login from "./components/Login";
-import Decoder from "./components/SerialNumberInput";
+import Login from './pages/login';
+import Decoder from "./pages/SerialNumberInput";
 
 const PrivateRoute = ({ component: Component, ...other }) => (
   <Route {...other} render={(props) => (
