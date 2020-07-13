@@ -22,7 +22,7 @@ class SerialNumberInput extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const textfieldSerials = this.formatSerials(this.state.value)
-    const data = await axios.post("http://localhost:5000/graphql", {
+    await axios.post("http://localhost:5000/graphql", {
       query: `
         query {
           productsFromSerials(serials: ${JSON.stringify(textfieldSerials)}){

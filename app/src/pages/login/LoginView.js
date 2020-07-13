@@ -11,13 +11,9 @@ import classnames from "classnames";
 import GoogleLogin from 'react-google-login';
 
 import google from "../../images/google.svg";
-import logo from "./meem.jpg"
 
 const Login = ({ classes, ...props }) => (
   <Grid container className={classes.container}>
-    <div className={classes.logotypeContainer}>
-      <img src={logo} alt="logo" className={classes.logotypeImage} />
-    </div>
     <div className={classes.formContainer}>
       <div className={classes.form}>
         <Tabs
@@ -32,7 +28,7 @@ const Login = ({ classes, ...props }) => (
         </Tabs>
         {props.activeTabId === 0 && (
           <React.Fragment>
-            <Typography variant="h1" className={classes.greeting}>
+            <Typography variant="h3" className={classes.greeting}>
               Login
             </Typography>
             <div className={classes.formDividerContainer}>
@@ -56,7 +52,7 @@ const Login = ({ classes, ...props }) => (
         )}
         {props.activeTabId === 1 && (
           <React.Fragment>
-            <Typography variant="h1" className={classes.greeting}>
+            <Typography variant="h3" className={classes.greeting}>
               Get Access
             </Typography>
             <div className={classes.formDividerContainer}>

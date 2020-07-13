@@ -1,22 +1,9 @@
 import pytest
 
-from collections import OrderedDict
-
 from product_builder.serial_number_parser import SerialNumberParser
 from product_builder.product_director import ProductDirector
 from product_builder.product_builder import SerializedProductBuilder
 from model_proxy.model_proxy import NativeDataProxy
-
-
-DEFAULT_PATTERN_KEY = OrderedDict([
-    ('model', 1),
-    ('model_year', 1),
-    ('month_built', 1),
-    ('year_built', 2),
-    ('factory', 1),
-    ('version', 1),
-    ('unique_id', 6),
-])
 
 test_data = [
     ('RB719F1000001', {
@@ -55,7 +42,7 @@ class TestProductDirector:
     @pytest.mark.parametrize('serial, expected', test_data)
     def test_parsed_serial_passed_to_product_director_returns_good_product(self, serial, expected):
         parsed = {}
-        serial_parser = SerialNumberParser(DEFAULT_PATTERN_KEY, serial)
+        serial_parser = SerialNumberParser(serial)
         for result in serial_parser:
             parsed[result[0]] = result[1]
         builder = ProductDirector(SerializedProductBuilder(NativeDataProxy))

@@ -32,6 +32,7 @@ export const resetError = () => ({
 export const loginUser = (userInfo) => dispatch => {
 
   dispatch(startLogin());
+  console.log(userInfo);
 
   const config = {
     method: 'POST',

@@ -12,8 +12,21 @@ from importlib import import_module
 from model_proxy.errors import ResourceNotFoundError, TableNotFoundError
 
 class ModelProxy(abc.ABC):
+
     @abc.abstractmethod
-    def read(self, serial_code):
+    def create(self, data):
+        pass
+
+    @abc.abstractmethod
+    def delete(self, model_id):
+        pass
+
+    @abc.abstractmethod
+    def update(self, model_id, new_data):
+        pass
+
+    @abc.abstractmethod
+    def read(self, model_id):
         pass
 
     @abc.abstractclassmethod
@@ -41,6 +54,15 @@ class NativeDataProxy(ModelProxy):
             return self.lookup_table[serial_code]
         except KeyError:
             raise ResourceNotFoundError
+
+    def create(self, data):
+        return NotImplementedError
+
+    def delete(self, model_id):
+        return NotImplementedError
+
+    def update(self, model_id, new_data):
+        return NotImplementedError
 
     @classmethod
     def from_model_name(cls, model_name):

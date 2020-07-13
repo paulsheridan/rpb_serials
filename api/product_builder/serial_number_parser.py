@@ -1,5 +1,16 @@
 from collections.abc import Iterator, Iterable
+from collections import OrderedDict
 
+
+DEFAULT_PATTERN_KEY = OrderedDict([
+    ('model', 1),
+    ('model_year', 1),
+    ('month_built', 1),
+    ('year_built', 2),
+    ('factory', 1),
+    ('version', 1),
+    ('unique_id', 12),
+])
 
 class SerialNumberParser(Iterable):
     """The concrete implementation of Parser for serial number patterns
@@ -9,7 +20,7 @@ class SerialNumberParser(Iterable):
     return.
     """
 
-    def __init__(self, pattern_key, serial_number):
+    def __init__(self, serial_number, pattern_key=DEFAULT_PATTERN_KEY):
         self.pattern_key = pattern_key
         self.serial_number = serial_number
 

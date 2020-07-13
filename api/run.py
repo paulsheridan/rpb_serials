@@ -14,18 +14,6 @@ from product_builder.product_director import ProductDirector
 from product_builder.product_builder import SerializedProductBuilder
 from model_proxy.model_proxy import NativeDataProxy
 
-from collections import OrderedDict
-
-
-DEFAULT_PATTERN_KEY = OrderedDict([
-    ('model', 1),
-    ('model_year', 1),
-    ('month_built', 1),
-    ('year_built', 2),
-    ('factory', 1),
-    ('version', 1),
-    ('unique_id', 6),
-])
 
 app = app_factory()
 
@@ -46,7 +34,7 @@ class Query(ObjectType):
         products = []
         for serial in serials:
             parsed = {}
-            serial_parser = SerialNumberParser(DEFAULT_PATTERN_KEY, serial)
+            serial_parser = SerialNumberParser(serial)
             for result in serial_parser:
                 parsed[result[0]] = result[1]
             builder = ProductDirector(SerializedProductBuilder(NativeDataProxy))
