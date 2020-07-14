@@ -18,7 +18,6 @@ function Login(props) {
         tokenAuth(idToken: ${JSON.stringify(userInfo.tokenId)}) {
           token {
             accessToken
-            refreshToken
           }
         }
       }

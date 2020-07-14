@@ -12,11 +12,8 @@ function SerialDecoder(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formatted = textValue.replace(/\n/g, ",").replace(/\s/g, "").split(",");
-    await axios.post("http://localhost:5000/graphql", {
-      headers: {
-        "Authorization": `Bearer ${Cookies.get("accessToken")}`
-      },
+    let formatted = textValue.replace(/\n/g, ",").replace(/\s/g, "").split(",");
+    let data = {
       query: `
         query {
           productsFromSerials(serials: ${JSON.stringify(formatted)}){
@@ -31,6 +28,12 @@ function SerialDecoder(props) {
           }
         }
       `
+    }
+    await axios({
+      method: "post",
+      url: "http://localhost:5000/graphql",
+      data: data,
+      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` }
     })
     .then((response) => {
       setproducts(response.data.data.productsFromSerials)
