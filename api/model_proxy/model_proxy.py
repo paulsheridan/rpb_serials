@@ -9,6 +9,7 @@ will be reading.
 import abc
 from importlib import import_module
 
+from models import db
 from model_proxy.errors import ResourceNotFoundError, TableNotFoundError
 
 class ModelProxy(abc.ABC):
@@ -66,7 +67,7 @@ class NativeDataProxy(ModelProxy):
 
     @classmethod
     def from_model_name(cls, model_name):
-        """A simple factory that provides an instance of any of
+        """An abstract factory that provides an instance of any of
         the lookup table dictionaries consuming a string
         version of the model class name
         """
@@ -77,6 +78,51 @@ class NativeDataProxy(ModelProxy):
 
         except (IndexError, AttributeError):
             raise TableNotFoundError(
-                '{} not found!'.format('model_proxy.lookup_tables' + model_name))
+                '{} not found!'.format('model_proxy.lookup_tables.' + model_name))
 
         return cls(lookup_table)
+
+class SQLAlchemyModelProxy(ModelProxy):
+    def __init__(self, sqlalchemy_model):
+        self.sqlalchemy_model = sqlalchemy_model
+
+    def read(self, serial_code):
+        """Returns a string for an individual product attribute, such as model, month produced, etc.
+
+        Args:
+            serial_code: - The serial code of the field name to retrieve.
+
+        Returns:
+            A string meaningful string of the serial code given.
+        """
+        try:
+            return self.sqlalchemy_model.query.filter_by(code=serial_code).first()
+        except KeyError:
+            raise ResourceNotFoundError
+
+    def create(self, data):
+        return NotImplementedError
+
+    def delete(self, model_id):
+        return NotImplementedError
+
+    def update(self, model_id, new_data):
+        return NotImplementedError
+
+    @classmethod
+    def from_model_name(cls, model_name):
+        """An abstract factory that provides a SQLAlchemy model instance
+         consuming a string version of the model class name
+        """
+
+        try:
+            model_module = import_module('api.models')
+            model_class_name = model_name.replace(
+                '_', ' ').title().replace(' ', '')
+            model_class = getattr(model_module, model_class_name)
+
+        except (IndexError, ModuleNotFoundError):
+            raise ImportError(
+                '{} not found!'.format('api.models.' + model_name))
+
+        return cls(model_class)

@@ -7,6 +7,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
+from api.models import db
+
 
 def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
     """ Bootstraps a Flask application and adds dependencies to the resulting object.
@@ -45,15 +47,11 @@ def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
 def database_factory(app: Flask) -> SQLAlchemy:
     """ Bootstraps SQLAlchemy for use with the Flask-SQLAlchemy extension.
 
-    Override this method with another db factory if you'd prefer, just be
-    sure to update the return typing of the `database_factory` method.
-
     Args:
         app (Flask): The flask app to add this db engine to
 
     Returns:
-        SQLAlchemy: The SQLAlchemy engine
+        SQLAlchemy: The SQLAlchemy engine with models registered
     """
-    db = SQLAlchemy()
     db.init_app(app)
     return db

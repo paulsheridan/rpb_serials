@@ -8,7 +8,7 @@ is set up, I can use these data structures to fill it with information, rather t
 all of this out again!
 """
 
-model = {
+product_model = {
     'R': 'RadRover',
     'M': 'RadMini',
     'W': 'RadWagon',

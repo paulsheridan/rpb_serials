@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 
 DEFAULT_PATTERN_KEY = OrderedDict([
-    ('model', 1),
+    ('product_model', 1),
     ('model_year', 1),
     ('month_built', 1),
     ('year_built', 2),

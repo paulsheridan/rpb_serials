@@ -13,7 +13,7 @@ from google_auth import google_user_from_token
 
 class Product(ObjectType):
     serial = String()
-    model = String()
+    product_model = String()
     model_year = String()
     month_built = String()
     year_built = String()

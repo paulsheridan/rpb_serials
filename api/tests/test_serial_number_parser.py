@@ -9,12 +9,12 @@ from collections import OrderedDict
 from product_builder.serial_number_parser import SerialNumberParser, DEFAULT_PATTERN_KEY
 
 test_data = [
-    ('RB719F1000001', {'model': 'R', 'model_year': 'B', 'month_built': '7', 'year_built': '19', 'factory': 'F', 'version': '1', 'unique_id': '000001'}),
-    ('HB918V1435684', {'model': 'H', 'model_year': 'B', 'month_built': '9', 'year_built': '18', 'factory': 'V', 'version': '1', 'unique_id': '435684'}),
-    ('SA520F3123456', {'model': 'S', 'model_year': 'A', 'month_built': '5', 'year_built': '20', 'factory': 'F', 'version': '3', 'unique_id': '123456'}),
-    ('RB719F10001', {'model': 'R', 'model_year': 'B', 'month_built': '7', 'year_built': '19', 'factory': 'F', 'version': '1', 'unique_id': '0001'}),
-    ('HB918V1435684567', {'model': 'H', 'model_year': 'B', 'month_built': '9', 'year_built': '18', 'factory': 'V', 'version': '1', 'unique_id': '435684567'}),
-    ('SA520F312', {'model': 'S', 'model_year': 'A', 'month_built': '5', 'year_built': '20', 'factory': 'F', 'version': '3', 'unique_id': '12'}),
+    ('RB719F1000001', {'product_model': 'R', 'model_year': 'B', 'month_built': '7', 'year_built': '19', 'factory': 'F', 'version': '1', 'unique_id': '000001'}),
+    ('HB918V1435684', {'product_model': 'H', 'model_year': 'B', 'month_built': '9', 'year_built': '18', 'factory': 'V', 'version': '1', 'unique_id': '435684'}),
+    ('SA520F3123456', {'product_model': 'S', 'model_year': 'A', 'month_built': '5', 'year_built': '20', 'factory': 'F', 'version': '3', 'unique_id': '123456'}),
+    ('RB719F10001', {'product_model': 'R', 'model_year': 'B', 'month_built': '7', 'year_built': '19', 'factory': 'F', 'version': '1', 'unique_id': '0001'}),
+    ('HB918V1435684567', {'product_model': 'H', 'model_year': 'B', 'month_built': '9', 'year_built': '18', 'factory': 'V', 'version': '1', 'unique_id': '435684567'}),
+    ('SA520F312', {'product_model': 'S', 'model_year': 'A', 'month_built': '5', 'year_built': '20', 'factory': 'F', 'version': '3', 'unique_id': '12'}),
 ]
 
 

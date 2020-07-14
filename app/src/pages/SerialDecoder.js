@@ -19,7 +19,7 @@ function SerialDecoder(props) {
         query {
           productsFromSerials(serials: ${JSON.stringify(formatted)}){
             serial
-            model
+            productModel
             modelYear
             monthBuilt
             yearBuilt
@@ -61,7 +61,7 @@ function SerialDecoder(props) {
         title="Products"
         columns={[
           { title: 'Serial Number', field: 'serial' , editable: 'never' },
-          { title: 'Model', field: 'model' , editable: 'never' },
+          { title: 'Product Model', field: 'productModel' , editable: 'never' },
           { title: 'Model Year', field: 'modelYear' , editable: 'never' },
           { title: 'Month Manufactured', field: 'monthBuilt' , editable: 'never' },
           { title: 'Year Manufactured', field: 'yearBuilt' , editable: 'never' },

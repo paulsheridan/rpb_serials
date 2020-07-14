@@ -4,7 +4,7 @@ class ProductDirector:
         self._builder = builder
 
     def create_product_from_key(self, serial_key):
-        self._builder.set_product_model(serial_key['model'])
+        self._builder.set_product_model(serial_key['product_model'])
         self._builder.set_model_year(serial_key['model_year'])
         self._builder.set_production_month(serial_key['month_built'])
         self._builder.set_production_year(serial_key['year_built'])

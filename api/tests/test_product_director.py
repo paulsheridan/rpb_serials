@@ -7,7 +7,7 @@ from model_proxy.model_proxy import NativeDataProxy
 
 test_data = [
     ('RB719F1000001', {
-        'model': 'RadRover',
+        'product_model': 'RadRover',
         'model_year': '2019',
         'month_built': 'July',
         'year_built': '2019',
@@ -17,7 +17,7 @@ test_data = [
         }
     ),
     ('HB918V1435684', {
-        'model': 'RadRhino',
+        'product_model': 'RadRhino',
         'model_year': '2019',
         'month_built': 'September',
         'year_built': '2018',
@@ -27,7 +27,7 @@ test_data = [
         }
     ),
     ('SA520F3123456', {
-        'model': 'RadCity Stepthru',
+        'product_model': 'RadCity Stepthru',
         'model_year': '2018',
         'month_built': 'May',
         'year_built': '2020',

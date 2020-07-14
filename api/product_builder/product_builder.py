@@ -1,5 +1,7 @@
 import abc
 
+from model_proxy.errors import ResourceNotFoundError
+
 
 class ProductBuilder(abc.ABC):
 
@@ -44,12 +46,15 @@ class SerializedProductBuilder(ProductBuilder):
         self.db_proxy_class = db_proxy_class
 
     def _query_model_proxy(self, database_model_name, code):
-        model_proxy = self.db_proxy_class.from_model_name(database_model_name)
-        return model_proxy.read(code)
+        try:
+            model_proxy = self.db_proxy_class.from_model_name(database_model_name)
+            return model_proxy.read(code)
+        except ResourceNotFoundError:
+            return 'Unknown'
 
     def set_product_model(self, model):
-        model_name = self._query_model_proxy('model', model)
-        self.product['model'] = model_name
+        model_name = self._query_model_proxy('product_model', model)
+        self.product['product_model'] = model_name
 
     def set_model_year(self, model_year):
         model_year = self._query_model_proxy('model_year', model_year)

@@ -53,12 +53,14 @@ ALL_FACTORY_CODES = [
     ('V', 'FactoryV'),
 ]
 
+
+
 class TestProductBuilder:
     @pytest.mark.parametrize('test_code, expected_result', ALL_MODELS)
     def test_product_builder_adds_model_name_correctly(self, test_code, expected_result):
         builder = SerializedProductBuilder(NativeDataProxy)
         builder.set_product_model(test_code)
-        assert builder.product['model'] == expected_result
+        assert builder.product['product_model'] == expected_result
 
     @pytest.mark.parametrize('test_code, expected_result', ALL_MODEL_YEARS)
     def test_product_builder_adds_model_year_correctly(self, test_code, expected_result):
@@ -95,3 +97,10 @@ class TestProductBuilder:
         builder = SerializedProductBuilder(NativeDataProxy)
         builder.set_unique_id(test_unique_id)
         assert builder.product['unique_id'] == test_unique_id
+
+    @pytest.mark.parametrize('query_models', ['product_model', 'model_year', 'month_built', 'factory'])
+    @pytest.mark.parametrize('nonexistant_values', [';foewfh', 'idontexist', 'nineninenine'])
+    def test_query_model_proxy_returns_unknown_if_entry_not_found(self, query_models, nonexistant_values):
+        builder = SerializedProductBuilder(NativeDataProxy)
+        test_result = builder._query_model_proxy(query_models, nonexistant_values)
+        assert test_result == 'Unknown'
