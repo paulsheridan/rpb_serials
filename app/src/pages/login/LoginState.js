@@ -1,8 +1,9 @@
 import Cookies from 'js-cookie'
+import axios from 'axios';
 
 export const initialState = {
   isLoading: false,
-  isAuthenticated: !!Cookies.get("id_token"),
+  isAuthenticated: !!Cookies.get("accessToken"),
   error: null
 };
 
@@ -32,27 +33,25 @@ export const resetError = () => ({
 export const loginUser = (userInfo) => dispatch => {
 
   dispatch(startLogin());
-  console.log(userInfo);
 
-  const config = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({'token': userInfo.Zi.id_token}),
-  };
-
-  fetch('http://localhost:8000/api/v1/auth/token/', config)
-  .then(response => response.json().then(user => ({ user, response })))
-  .then(({ user, response }) => {
-    if (!response.ok) {
-      dispatch(loginFailure());
-      return Promise.reject()
+  axios.post("http://localhost:5000/graphql", {
+    query: `
+    mutation {
+      tokenAuth(idToken: ${JSON.stringify(userInfo.tokenId)}) {
+        token {
+          accessToken
+          refreshToken
+        }
+      }
     }
-    console.log(user)
-    Cookies.set('id_token', user.token);
-    console.log(Cookies.get('id_token'))
-    dispatch(loginSuccess());
-    return Promise.resolve(user.token);
+    `
   })
+  .then((response) => {
+    const tokenData = response.data.data.tokenAuth.token
+    Cookies.set('accessToken', tokenData.accessToken);
+    Cookies.set('refreshToken', tokenData.refreshToken);
+  })
+  .catch(err => console.log(err))
 };
 
 export const signOutSuccess = () => ({
@@ -60,7 +59,7 @@ export const signOutSuccess = () => ({
 });
 
 export const signOut = () => dispatch => {
-  Cookies.remove("id_token");
+  Cookies.remove("accessToken");
   dispatch(signOutSuccess());
 };
 

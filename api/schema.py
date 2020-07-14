@@ -39,28 +39,23 @@ class Query(ObjectType):
             products.append(product)
         return products
 
-class User(ObjectType):
+class Token(ObjectType):
     access_token = String()
     refresh_token = String()
-    username = String()
 
 class TokenAuth(Mutation):
-    # token_auth = create_access_token()
-    # verify_token = get_jwt_identity()
-    # refresh_token = create_refresh_token()
-
     class Arguments:
         id_token = String(required=True)
 
-    user = Field(User)
+    token = Field(Token)
 
     def mutate(self, info, id_token):
-        user = google_user_from_token(id_token)
-        access_token = create_access_token(identity=user)
-        refresh_token = create_refresh_token(identity=user)
-        user['access_token'] = access_token
-        user['refresh_token'] = refresh_token
-        return TokenAuth(user=user)
+        token = google_user_from_token(id_token)
+        access_token = create_access_token(identity=token)
+        refresh_token = create_refresh_token(identity=token)
+        token['access_token'] = access_token
+        token['refresh_token'] = refresh_token
+        return TokenAuth(token=token)
 
 class Mutation(ObjectType):
     token_auth = TokenAuth.Field()

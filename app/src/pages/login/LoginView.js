@@ -46,7 +46,6 @@ const Login = ({ classes, ...props }) => (
               clientId='161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com'
               buttonText='Sign in with Google'
               onSuccess={props.handleGoogleLogin}
-              scope='profile'
             />
           </React.Fragment>
         )}
