@@ -49,9 +49,8 @@ export const loginUser = (userInfo) => dispatch => {
   .then((response) => {
     const tokenData = response.data.data.tokenAuth.token
     Cookies.set('accessToken', tokenData.accessToken);
-    Cookies.set('refreshToken', tokenData.refreshToken);
+    dispatch(loginSuccess())
   })
-  .catch(err => console.log(err))
 };
 
 export const signOutSuccess = () => ({

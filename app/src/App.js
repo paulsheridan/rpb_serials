@@ -1,52 +1,67 @@
 import React from "react";
 import { BrowserRouter, Route, Redirect, Link, withRouter } from "react-router-dom";
 import Cookies from "js-cookie"
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-import googleAuth from "./googleAuth";
+import themes, { overrides } from './themes';
 import Login from './pages/login';
-import Decoder from "./pages/SerialNumberInput";
+import SerialNumberInput from "./pages/SerialNumberInput";
 
-const PrivateRoute = ({ component: Component, ...other }) => (
-  <Route {...other} render={(props) => (
-     googleAuth.isAuthenticated === true
-      ? <Component {...props} />
-      : <Redirect to={{
-        pathname: "/Login",
-        state: { from: props.location }
-      }} />
-  )} />
-)
+const theme = createMuiTheme({...themes.default, ...overrides});
 
-const Public = () => <h3>Public</h3>
+// const PrivateRoute = ({ component, ...rest }) => {
+//   return (
+//     <Route
+//       {...rest} render={props => (
+//       Cookies.get('accessToken') ? (
+//         React.createElement(component, props)
+//       ) : (
+//         <Redirect
+//           to={{
+//             pathname: '/login',
+//             state: { from: props.location },
+//           }}
+//         />
+//       )
+//     )}
+//     />
+//   );
+// };
 
-const AuthButton = withRouter(({ history }) => (
-   googleAuth.isAuthenticated
-    ? <p>
-        Welcome! <button onClick={() => {
-           googleAuth.signout(() => history.push("/"))
-        }}>Sign out</button>
-      </p>
-    : <p>You are not logged in.</p>
-))
+// const PublicRoute = ({ component, ...rest }) => {
+//   return (
+//     <Route
+//       {...rest} render={props => (
+//       Cookies.get('accessToken') ? (
+//         <Redirect
+//           to={{
+//             pathname: '/',
+//           }}
+//         />
+//       ) : (
+//         React.createElement(component, props)
+//       )
+//     )}
+//     />
+//   );
+// };
 
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter>
-        <div>
-          <AuthButton />
-          <ul>
-            <li><Link to="/public">Public Page</Link></li>
-            <li><Link to="/decoder">Serial Number Decoder</Link></li>
-          </ul>
-        </div>
-        <Route path="/public" component={Public} />
-        <Route path="/login" component={Login} />
-        <PrivateRoute path="/decoder" component={Decoder} />
-      </BrowserRouter>
+      <MuiThemeProvider theme={theme}>
+        <BrowserRouter>
+          <div>
+            <ul>
+              <li><Link to="/decoder">Serial Number Decoder</Link></li>
+            </ul>
+          </div>
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/decoder" component={SerialNumberInput} />
+        </BrowserRouter>
+      </MuiThemeProvider>
     )
   }
-
 }
 
 export default App;

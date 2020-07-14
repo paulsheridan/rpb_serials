@@ -16,22 +16,12 @@ export default compose(
   ),
   withRouter,
   withState("activeTabId", "setActiveTabId", 0),
-  withState("nameValue", "setNameValue", ""),
-  withState("loginValue", "setLoginValue", ""),
-  withState("passwordValue", "setPasswordValue", ""),
   withHandlers({
     handleTabChange: props => (e, id) => {
       props.setActiveTabId(id);
     },
     handleGoogleLogin: props => (userInfo) => {
       props.loginUser(userInfo);
-    }
-  }),
-  lifecycle({
-    componentWillReceiveProps(nextProps) {
-      if (!this.props.error && nextProps.error) {
-        this.props.setPasswordValue("");
-      }
     }
   })
 )(LoginView);

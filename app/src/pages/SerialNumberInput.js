@@ -43,7 +43,6 @@ class SerialNumberInput extends React.Component {
         products: response.data.data.productsFromSerials
       })
     })
-    .catch(err => console.log(err))
   }
 
   formatSerials(unformatted) {

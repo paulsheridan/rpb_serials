@@ -2,7 +2,6 @@ from graphene import ObjectType, String, List, Schema, Field, Mutation
 from flask_jwt_extended import (
     jwt_required,
     create_access_token,
-    get_jwt_identity,
     create_refresh_token,
 )
 
