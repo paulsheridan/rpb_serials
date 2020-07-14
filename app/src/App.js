@@ -1,67 +1,41 @@
-import React from "react";
-import { BrowserRouter, Route, Redirect, Link, withRouter } from "react-router-dom";
-import Cookies from "js-cookie"
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link, Route, Redirect } from "react-router-dom";
+import Cookies from "js-cookie";
 
-import themes, { overrides } from './themes';
-import Login from './pages/login';
-import SerialNumberInput from "./pages/SerialNumberInput";
+import PrivateRoute from "./PrivateRoute";
+import Home from "./pages/Home";
+import SerialDecoder from "./pages/SerialDecoder";
+import { AuthContext } from "./context/auth";
+import Login from "./pages/Login";
 
-const theme = createMuiTheme({...themes.default, ...overrides});
+function App(props) {
+  const [authTokens, setAuthTokens] = useState();
 
-// const PrivateRoute = ({ component, ...rest }) => {
-//   return (
-//     <Route
-//       {...rest} render={props => (
-//       Cookies.get('accessToken') ? (
-//         React.createElement(component, props)
-//       ) : (
-//         <Redirect
-//           to={{
-//             pathname: '/login',
-//             state: { from: props.location },
-//           }}
-//         />
-//       )
-//     )}
-//     />
-//   );
-// };
-
-// const PublicRoute = ({ component, ...rest }) => {
-//   return (
-//     <Route
-//       {...rest} render={props => (
-//       Cookies.get('accessToken') ? (
-//         <Redirect
-//           to={{
-//             pathname: '/',
-//           }}
-//         />
-//       ) : (
-//         React.createElement(component, props)
-//       )
-//     )}
-//     />
-//   );
-// };
-
-class App extends React.Component {
-  render() {
-    return (
-      <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
-          <div>
-            <ul>
-              <li><Link to="/decoder">Serial Number Decoder</Link></li>
-            </ul>
-          </div>
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/decoder" component={SerialNumberInput} />
-        </BrowserRouter>
-      </MuiThemeProvider>
-    )
+  const setTokens = (data) => {
+    Cookies.set("accessToken", data);
+    setAuthTokens(data);
   }
+
+  return (
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+      <Router>
+        <div>
+        <ul>
+          <li>
+            <Link to="/">Home Page</Link>
+          </li>
+          <li>
+            <Link to="/decoder">Serial Decoder</Link>
+          </li>
+        </ul>
+          <Route exact path="/" render={() => <Redirect to="/decoder" />} />
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/decoder" component={SerialDecoder} />
+        </div>
+      </Router>
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

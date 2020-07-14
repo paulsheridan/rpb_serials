@@ -7,8 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
-from api.models import db
-
 
 def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
     """ Bootstraps a Flask application and adds dependencies to the resulting object.
@@ -37,7 +35,6 @@ def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
     app.config["DEBUG"] = True
     app.config["SECRET_KEY"] = b'H\x12`\xc9\xf6\xae\xcbD\xddU\x92\x13"-{\x96s\xde\x9bY\x06\xb7{\x05'
     app.config["GOOGLE_CLIENT_ID"] = "161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
-    app.config["JWT_TOKEN_LOCATION"] = "cookies"
     app.config.update(**(config or {}))
     app.db = database_factory(app)
     CORS(app, resources={r"/graphql*": {"origins": "*"}})
@@ -48,11 +45,15 @@ def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
 def database_factory(app: Flask) -> SQLAlchemy:
     """ Bootstraps SQLAlchemy for use with the Flask-SQLAlchemy extension.
 
+    Override this method with another db factory if you'd prefer, just be
+    sure to update the return typing of the `database_factory` method.
+
     Args:
         app (Flask): The flask app to add this db engine to
 
     Returns:
-        SQLAlchemy: The SQLAlchemy engine with models registered
+        SQLAlchemy: The SQLAlchemy engine
     """
+    db = SQLAlchemy()
     db.init_app(app)
     return db
