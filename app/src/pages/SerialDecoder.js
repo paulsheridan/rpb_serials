@@ -8,6 +8,7 @@ import { useAuth } from '../context/auth';
 function SerialDecoder(props) {
   const [textValue, setTextValue]  = useState("");
   const [products, setproducts] = useState([])
+  const [showResults, setShowResults] = useState(false)
   const { setAuthTokens } = useAuth();
 
   const handleSubmit = async (event) => {
@@ -38,6 +39,9 @@ function SerialDecoder(props) {
     .then((response) => {
       setproducts(response.data.data.productsFromSerials)
     })
+    .then(() => {
+      setShowResults(true)
+    })
   }
 
   function logOut() {
@@ -53,7 +57,7 @@ function SerialDecoder(props) {
         <textarea value={textValue} onChange={(event) => setTextValue(event.target.value)} />
         <input type="submit" value="Submit" />
       </form>
-      <MaterialTable
+      { showResults ? <MaterialTable
         title="Products"
         columns={[
           { title: 'Serial Number', field: 'serial' , editable: 'never' },
@@ -66,7 +70,7 @@ function SerialDecoder(props) {
           { title: 'Unique ID', field: 'uniqueId' , editable: 'never' },
         ]}
         data={products}
-      />
+      /> : null }
       <Button onClick={logOut}>Log out</Button>
     </div>
   );

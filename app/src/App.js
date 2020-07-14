@@ -22,9 +22,6 @@ function App(props) {
         <div>
         <ul>
           <li>
-            <Link to="/">Home Page</Link>
-          </li>
-          <li>
             <Link to="/decoder">Serial Decoder</Link>
           </li>
         </ul>
