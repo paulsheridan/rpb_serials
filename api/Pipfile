@@ -15,6 +15,9 @@ graphene = "*"
 graphene-sqlalchemy = "*"
 psycopg2-binary = "*"
 flask-cors = "*"
+flask-jwt-extended = "*"
+google-auth = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"

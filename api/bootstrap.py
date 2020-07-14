@@ -5,6 +5,7 @@ import typing as t
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 
 from api.models import db
 
@@ -34,9 +35,13 @@ def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
         os.environ.get("SQLALCHEMY_TRACK_MODIFICATIONS", 0)
     )
     app.config["DEBUG"] = True
+    app.config["SECRET_KEY"] = b'H\x12`\xc9\xf6\xae\xcbD\xddU\x92\x13"-{\x96s\xde\x9bY\x06\xb7{\x05'
+    app.config["GOOGLE_CLIENT_ID"] = "161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
+    app.config["JWT_TOKEN_LOCATION"] = "cookies"
     app.config.update(**(config or {}))
     app.db = database_factory(app)
     CORS(app, resources={r"/graphql*": {"origins": "*"}})
+    JWTManager(app)
     return app
 
 
