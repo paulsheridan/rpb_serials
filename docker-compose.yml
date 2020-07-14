@@ -22,7 +22,7 @@ services:
       - db
     environment:
       STAGE: dev
-      # SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://rpb_serial:dev@db/rpb_serial
+      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://rpb_serial:dev@db/rpb_serial
       SQLALCHEMY_TRACK_MODIFICATIONS: 0
     networks:
       - rpb_serial

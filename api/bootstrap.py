@@ -54,4 +54,6 @@ def database_factory(app: Flask) -> SQLAlchemy:
         SQLAlchemy: The SQLAlchemy engine with models registered
     """
     db.init_app(app)
+    with app.app_context():
+        db.create_all()
     return db

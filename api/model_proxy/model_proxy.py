@@ -8,6 +8,7 @@ will be reading.
 
 import abc
 from importlib import import_module
+from psycopg2.errors import UniqueViolation
 
 from models import db
 from model_proxy.errors import ResourceNotFoundError, TableNotFoundError
@@ -36,14 +37,14 @@ class ModelProxy(abc.ABC):
 
 
 class NativeDataProxy(ModelProxy):
-    """A concrete implementation of the ModelProxy API that wraps a dictionary for
+    """ A concrete implementation of the ModelProxy API that wraps a dictionary for
         any application model"""
 
     def __init__(self, lookup_table):
         self.lookup_table = lookup_table
 
     def read(self, serial_code):
-        """Returns a string for an individual product attribute, such as model, month produced, etc.
+        """ Returns a string for an individual product attribute, such as model, month produced, etc.
 
         Args:
             serial_code: - The serial code of the field name to retrieve.
@@ -67,7 +68,7 @@ class NativeDataProxy(ModelProxy):
 
     @classmethod
     def from_model_name(cls, model_name):
-        """An abstract factory that provides an instance of any of
+        """ An abstract factory that provides an instance of any of
         the lookup table dictionaries consuming a string
         version of the model class name
         """
@@ -86,8 +87,8 @@ class SQLAlchemyModelProxy(ModelProxy):
     def __init__(self, sqlalchemy_model):
         self.sqlalchemy_model = sqlalchemy_model
 
-    def read(self, serial_code):
-        """Returns a string for an individual product attribute, such as model, month produced, etc.
+    def read(self, serial_code=None):
+        """ Returns a string for an individual product attribute, such as model, month produced, etc.
 
         Args:
             serial_code: - The serial code of the field name to retrieve.
@@ -95,13 +96,21 @@ class SQLAlchemyModelProxy(ModelProxy):
         Returns:
             A string meaningful string of the serial code given.
         """
-        try:
-            return self.sqlalchemy_model.query.filter_by(code=serial_code).first()
-        except KeyError:
+        if serial_code is None:
+            return self.sqlalchemy_model.query.all()
+        value = self.sqlalchemy_model.query.filter_by(code=serial_code).first()
+        if not value:
             raise ResourceNotFoundError
+        return value
 
     def create(self, data):
-        return NotImplementedError
+        try:
+            instance = self.sqlalchemy_model(**data)
+            db.session.add(instance)
+            db.session.commit()
+            return instance
+        except UniqueViolation:
+            raise ValueError('That entry already exists in the database.')
 
     def delete(self, model_id):
         return NotImplementedError
