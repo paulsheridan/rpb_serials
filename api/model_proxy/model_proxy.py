@@ -28,7 +28,7 @@ class ModelProxy(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def read(self, model_id):
+    def read(self, serial_code):
         pass
 
     @abc.abstractclassmethod
