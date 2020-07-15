@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./pages/Home";
 import SerialDecoder from "./pages/SerialDecoder";
+import ModelAdmin from "./pages/ModelAdmin";
 import { AuthContext } from "./context/auth";
 import Login from "./pages/Login";
 
@@ -23,12 +24,16 @@ function App(props) {
         <ul>
           <li>
             <Link to="/decoder">Serial Decoder</Link>
+            <Link to="/addmodels">Add New Codes</Link>
           </li>
         </ul>
           <Route exact path="/" render={() => <Redirect to="/decoder" />} />
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <PrivateRoute path="/decoder" component={SerialDecoder} />
+          <PrivateRoute path="/addmodels" component={ModelAdmin} />
+          {/* <Route path="/decoder" component={SerialDecoder} />
+          <Route path="/addmodels" component={ModelAdmin} /> */}
         </div>
       </Router>
     </AuthContext.Provider>
