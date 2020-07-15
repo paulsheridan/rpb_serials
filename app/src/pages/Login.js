@@ -5,10 +5,20 @@ import { GoogleLogin } from 'react-google-login';
 import { useAuth } from '../context/auth';
 
 function Login(props) {
+
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const { setAuthTokens } = useAuth();
-  const referer = props.location.state.referer || "/";
+  let referer = "";
+
+  try {
+    referer = props.location.state.referer || "/";
+  }
+  catch (error) {
+    if (error instanceof TypeError) {
+      referer = "/";
+    }
+  }
 
   function postLogin(userInfo) {
     axios.post("http://localhost:5000/graphql", {
@@ -21,14 +31,11 @@ function Login(props) {
         }
       }
       `
-    }).then(response => {
-      if (response.status === 200) {
+    }).then((response) => {
         setAuthTokens(response.data.data.tokenAuth.token.accessToken);
         setLoggedIn(true);
-      } else {
-        setIsError(true);
-      }
-    }).catch(e => {
+    })
+     .catch(e => {
       setIsError(true);
     });
   }
@@ -38,11 +45,13 @@ function Login(props) {
   }
 
   return (
-    <GoogleLogin
-      clientId="161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
-      buttonText="Sign in with Google"
-      onSuccess={postLogin}
-    />
+      <div>
+        <GoogleLogin
+          clientId="161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
+          buttonText="Sign in with Google"
+          onSuccess={postLogin}
+        />
+      </div>
   );
 }
 
