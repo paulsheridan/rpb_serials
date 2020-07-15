@@ -41,7 +41,7 @@ class Query(ObjectType):
     load_data = Boolean()
 
     @jwt_required
-    def resolve_load_data(parent, info):
+    def resolve_load_data(self, parent, info):
         """ Loads all data from datatables into the database. Only for
         pre-populating the database before use.
         """
@@ -51,7 +51,7 @@ class Query(ObjectType):
 
 
     @jwt_required
-    def resolve_products_from_serials(parent, info, serials):
+    def resolve_products_from_serials(self, parent, info, serials):
         """ Consumes a list of serial numbers, composes the parser, then the
         product builder, returns all products as dicts with meaningful keys and data
         """
@@ -87,7 +87,7 @@ class CreateProductCode(Mutation):
     product_code = Field(ProductCode)
 
     @jwt_required
-    def mutate(root, info, table, name, code):
+    def mutate(self, info, table, name, code):
         """ Adds a single new model instance to the database
         """
 

@@ -34,7 +34,8 @@ function Login(props) {
     }).then((response) => {
         Cookies.set(
           "accessToken",
-          response.data.data.tokenAuth.token.accessToken
+          response.data.data.tokenAuth.token.accessToken,
+          { expires: 1 }
         );
         setLoggedIn(true)
     })
