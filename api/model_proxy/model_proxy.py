@@ -104,6 +104,14 @@ class SQLAlchemyModelProxy(ModelProxy):
         return value
 
     def create(self, data):
+        """ Creates an individual product attribute, such as model, month produced, etc in the database.
+
+        Args:
+            data: - The dict containing code and name variables to add
+
+        Returns:
+            The model instance added.
+        """
         try:
             instance = self.sqlalchemy_model(**data)
             db.session.add(instance)

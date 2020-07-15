@@ -4,12 +4,6 @@ from api.model_proxy.lookup_tables import (
     month_built,
     factory,
 )
-from api.models import (
-    ProductModel,
-    MonthBuilt,
-    ModelYear,
-    Factory,
-)
 from model_proxy.model_proxy import SQLAlchemyModelProxy
 
 

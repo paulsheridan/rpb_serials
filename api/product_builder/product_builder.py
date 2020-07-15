@@ -40,6 +40,11 @@ class ProductBuilder(abc.ABC):
 
 
 class SerializedProductBuilder(ProductBuilder):
+    """ A concrete implementation of the builder class, it
+    contains all the necessary functionality to decode the
+    individual product attributes and returns a dict comprised
+    of field names and associated codes
+    """
 
     def __init__(self, db_proxy_class):
         self.product = {}

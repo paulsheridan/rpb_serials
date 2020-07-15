@@ -42,12 +42,20 @@ class Query(ObjectType):
 
     @jwt_required
     def resolve_load_data(parent, info):
+        """ Loads all data from datatables into the database. Only for
+        pre-populating the database before use.
+        """
+
         populate_from_tables()
         return True
 
 
     @jwt_required
     def resolve_products_from_serials(parent, info, serials):
+        """ Consumes a list of serial numbers, composes the parser, then the
+        product builder, returns all products as dicts with meaningful keys and data
+        """
+
         products = []
         for serial in serials:
             parsed = {}
@@ -61,6 +69,10 @@ class Query(ObjectType):
         return products
 
     @jwt_required
+    """ Fetches all product codes from the database for display in the model admin
+    page.
+    """
+
     def resolve_product_codes(self, info, table):
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         product_codes = model_proxy.read()
@@ -75,6 +87,9 @@ class CreateProductCode(Mutation):
     product_code = Field(ProductCode)
 
     @jwt_required
+    """ Adds a single new model instance to the database
+    """
+
     def mutate(root, info, table, name, code):
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         product_code = model_proxy.create(
