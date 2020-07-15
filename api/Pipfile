@@ -18,6 +18,7 @@ flask-cors = "*"
 flask-jwt-extended = "*"
 google-auth = "*"
 requests = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.6"

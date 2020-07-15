@@ -133,13 +133,13 @@ class SQLAlchemyModelProxy(ModelProxy):
         """
 
         try:
-            model_module = import_module('api.models')
+            model_module = import_module('models')
             model_class_name = model_name.replace(
                 '_', ' ').title().replace(' ', '')
             model_class = getattr(model_module, model_class_name)
 
         except (IndexError, ModuleNotFoundError):
             raise ImportError(
-                '{} not found!'.format('api.models.' + model_name))
+                '{} not found!'.format('models.' + model_name))
 
         return cls(model_class)

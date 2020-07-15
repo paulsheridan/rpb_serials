@@ -6,8 +6,7 @@ WORKDIR /opt/api
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV FLASK_ENV development
-ENV FLASK_DEBUG 1
+ENV FLASK_ENV production
 ENV FLASK_APP run.py
 
 # install postgres client
@@ -32,4 +31,5 @@ COPY . .
 # Run Commands
 EXPOSE 5000
 ENTRYPOINT ["/opt/api/cmds/entrypoint.sh"]
-CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
+# CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "--user=apiuser", "--bind=0.0.0.0:5000", "run:app"]

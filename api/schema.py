@@ -69,11 +69,11 @@ class Query(ObjectType):
         return products
 
     @jwt_required
-    """ Fetches all product codes from the database for display in the model admin
-    page.
-    """
-
     def resolve_product_codes(self, info, table):
+        """ Fetches all product codes from the database for display in the model admin
+        page.
+        """
+
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         product_codes = model_proxy.read()
         return product_codes
@@ -87,10 +87,10 @@ class CreateProductCode(Mutation):
     product_code = Field(ProductCode)
 
     @jwt_required
-    """ Adds a single new model instance to the database
-    """
-
     def mutate(root, info, table, name, code):
+        """ Adds a single new model instance to the database
+        """
+
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         product_code = model_proxy.create(
             {
@@ -111,6 +111,9 @@ class TokenAuth(Mutation):
     token = Field(Token)
 
     def mutate(self, info, id_token):
+        """ Creates JWT token from google user data received from the front end.
+        """
+
         token = google_user_from_token(id_token)
         access_token = create_access_token(identity=token)
         refresh_token = create_refresh_token(identity=token)

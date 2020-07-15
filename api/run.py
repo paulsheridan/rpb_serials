@@ -5,7 +5,7 @@ import os
 from flask_graphql import GraphQLView
 
 from bootstrap import app_factory
-from api.schema import schema
+from schema import schema
 
 
 app = app_factory()

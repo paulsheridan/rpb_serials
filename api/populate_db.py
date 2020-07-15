@@ -1,4 +1,4 @@
-from api.model_proxy.lookup_tables import (
+from model_proxy.lookup_tables import (
     product_model,
     model_year,
     month_built,
