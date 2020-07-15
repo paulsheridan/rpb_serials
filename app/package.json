@@ -11,19 +11,14 @@
     "@testing-library/user-event": "^7.1.2",
     "apollo-boost": "^0.4.9",
     "axios": "^0.19.2",
-    "classnames": "^2.2.6",
     "graphql": "^15.3.0",
     "js-cookie": "^2.2.1",
     "material-table": "^1.65.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.21",
-    "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
-    "recompose": "^0.30.0",
-    "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.1"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Card, Form } from '../themes/authForms';
 import { GoogleLogin } from 'react-google-login';
 import { useAuth } from '../context/auth';
 
@@ -39,15 +38,11 @@ function Login(props) {
   }
 
   return (
-    <Card>
-      <Form>
-      <GoogleLogin
-        clientId="161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
-        buttonText="Sign in with Google"
-        onSuccess={postLogin}
-      />
-      </Form>
-    </Card>
+    <GoogleLogin
+      clientId="161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
+      buttonText="Sign in with Google"
+      onSuccess={postLogin}
+    />
   );
 }
 

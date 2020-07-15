@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import MaterialTable from 'material-table';
-import { Button } from '../themes/authForms';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import { useAuth } from '../context/auth';
 
 function SerialDecoder(props) {
@@ -71,7 +72,7 @@ function SerialDecoder(props) {
         ]}
         data={products}
       /> : null }
-      <Button onClick={logOut}>Log out</Button>
+      <Button variant="outlined" color="secondary" onClick={logOut}>Log out</Button>
     </div>
   );
 }

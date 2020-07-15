@@ -5,8 +5,8 @@ import MaterialTable from 'material-table';
 
 function ModelAdmin(props) {
   const [modelCodes, setModelCodes] = useState([]);
-  const [name, setName] = useState("");
-  const [code, setCode] = useState("");
+  const [name, setName] = useState("name");
+  const [code, setCode] = useState("code");
 
   useEffect(() => {
     let data = {
@@ -35,7 +35,7 @@ function ModelAdmin(props) {
     let data = {
       query: `
         mutation {
-          createProductCode(table: "product_model", code: ${code}, name: ${name}) {
+          createProductCode(table: "product_model", code: ${JSON.stringify(String(code).toUpperCase())}, name: ${JSON.stringify(String(name))}) {
             productCode {
               code
               name
@@ -51,7 +51,9 @@ function ModelAdmin(props) {
       headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` }
     })
     .then((response) => {
-      setModelCodes(modelCodes => modelCodes.concat(response.data.data.productCode))
+      setModelCodes(modelCodes => modelCodes.concat(
+        response.data.data.createProductCode.productCode
+        ))
     })
   }
 
