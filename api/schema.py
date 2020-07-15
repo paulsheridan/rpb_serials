@@ -1,15 +1,25 @@
-from graphene import ObjectType, String, List, Schema, Field, Mutation
+from graphene import (
+    ObjectType,
+    String,
+    List,
+    Schema,
+    Field,
+    Mutation,
+    Boolean)
+
 from flask_jwt_extended import (
     jwt_required,
     create_access_token,
     create_refresh_token,
 )
+from google_auth import google_user_from_token
 
 from product_builder.serial_number_parser import SerialNumberParser
 from product_builder.product_director import ProductDirector
 from product_builder.product_builder import SerializedProductBuilder
 from model_proxy.model_proxy import SQLAlchemyModelProxy
-from google_auth import google_user_from_token
+from populate_db import populate_from_tables
+
 
 class ProductCode(ObjectType):
     code = String()
@@ -28,6 +38,13 @@ class Product(ObjectType):
 class Query(ObjectType):
     products_from_serials = List(Product, serials=List(String))
     product_codes = List(ProductCode, table=String())
+    load_data = Boolean()
+
+    @jwt_required
+    def resolve_load_data(parent, info):
+        populate_from_tables()
+        return True
+
 
     @jwt_required
     def resolve_products_from_serials(parent, info, serials):

@@ -1,11 +1,13 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
 import { makeStyles } from "@material-ui/core/styles";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import Cookies from "js-cookie";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,10 +24,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleNav() {
   const classes = useStyles();
+  let history = useHistory();
 
 
   function logOut() {
     Cookies.remove('accessToken')
+    history.push("/login");
   }
 
   return (

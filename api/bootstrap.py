@@ -39,7 +39,7 @@ def app_factory(config: t.Optional[t.Dict[str, t.Any]] = None) -> Flask:
     app.config["GOOGLE_CLIENT_ID"] = "161417844290-ueic5i3perjmooskhmoea4mk9a542mm1.apps.googleusercontent.com"
     app.config.update(**(config or {}))
     app.db = database_factory(app)
-    CORS(app, resources={r"/graphql*": {"origins": "*"}})
+    CORS(app, resources={r"/graphql*": {"origins": "http://localhost:3000"}})
     JWTManager(app)
     return app
 
