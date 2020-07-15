@@ -46,7 +46,6 @@ class Query(ObjectType):
     @jwt_required
     def resolve_product_codes(self, info, table):
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
-        print(model_proxy)
         product_codes = model_proxy.read()
         return product_codes
 
