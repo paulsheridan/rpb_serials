@@ -6,8 +6,11 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import Modal from "@material-ui/core/Modal";
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -130,14 +133,24 @@ function ModelAdmin(props) {
           data={modelCodes}
         />
       </div>
-      <Modal
+      <Dialog
         open={modalOpen}
         onClose={handleModalClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        Something went wrong with that request!
-      </Modal>
+        <DialogTitle id="alert-dialog-title">Oh no!</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Something went wrong with that request!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleModalClose} color="primary" autoFocus>
+            Paul probably messed up!
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

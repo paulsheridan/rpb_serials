@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { GoogleLogin } from 'react-google-login';
-import { useAuth } from '../context/auth';
+import Cookies from "js-cookie";
+
 
 function Login(props) {
 
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { setAuthTokens } = useAuth();
   let referer = "";
 
   try {
@@ -32,8 +32,11 @@ function Login(props) {
       }
       `
     }).then((response) => {
-        setAuthTokens(response.data.data.tokenAuth.token.accessToken);
-        setLoggedIn(true);
+        Cookies.set(
+          "accessToken",
+          response.data.data.tokenAuth.token.accessToken
+        );
+        setLoggedIn(true)
     })
      .catch(e => {
       setIsError(true);

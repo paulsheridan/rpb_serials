@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
-import { useAuth } from '../context/auth';
+import Cookies from "js-cookie";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleNav() {
   const classes = useStyles();
-  const { setAuthTokens } = useAuth();
 
 
   function logOut() {
-    setAuthTokens();
+    Cookies.remove('accessToken')
   }
 
   return (
