@@ -29,7 +29,7 @@ class Query(ObjectType):
     products_from_serials = List(Product, serials=List(String))
     product_codes = List(ProductCode, table=String())
 
-    # @jwt_required
+    @jwt_required
     def resolve_products_from_serials(parent, info, serials):
         products = []
         for serial in serials:
@@ -43,7 +43,7 @@ class Query(ObjectType):
             products.append(product)
         return products
 
-    # @jwt_required
+    @jwt_required
     def resolve_product_codes(self, info, table):
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         print(model_proxy)
@@ -58,7 +58,7 @@ class CreateProductCode(Mutation):
 
     product_code = Field(ProductCode)
 
-    # @jwt_required
+    @jwt_required
     def mutate(root, info, table, name, code):
         model_proxy = SQLAlchemyModelProxy.from_model_name(table)
         product_code = model_proxy.create(

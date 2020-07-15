@@ -48,7 +48,10 @@ class SerializedProductBuilder(ProductBuilder):
     def _query_model_proxy(self, database_model_name, code):
         try:
             model_proxy = self.db_proxy_class.from_model_name(database_model_name)
-            return model_proxy.read(code)
+
+            queried = model_proxy.read(code)
+            print(queried)
+            return queried.name
         except ResourceNotFoundError:
             return 'Unknown'
 
