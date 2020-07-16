@@ -18,7 +18,6 @@ from product_builder.serial_number_parser import SerialNumberParser
 from product_builder.product_director import ProductDirector
 from product_builder.product_builder import SerializedProductBuilder
 from model_proxy.model_proxy import SQLAlchemyModelProxy
-from populate_db import populate_from_tables
 
 
 class ProductCode(ObjectType):
@@ -38,20 +37,9 @@ class Product(ObjectType):
 class Query(ObjectType):
     products_from_serials = List(Product, serials=List(String))
     product_codes = List(ProductCode, table=String())
-    load_data = Boolean()
 
     @jwt_required
-    def resolve_load_data(self, parent, info):
-        """ Loads all data from datatables into the database. Only for
-        pre-populating the database before use.
-        """
-
-        populate_from_tables()
-        return True
-
-
-    @jwt_required
-    def resolve_products_from_serials(self, parent, info, serials):
+    def resolve_products_from_serials(parent, info, serials):
         """ Consumes a list of serial numbers, composes the parser, then the
         product builder, returns all products as dicts with meaningful keys and data
         """
@@ -69,7 +57,7 @@ class Query(ObjectType):
         return products
 
     @jwt_required
-    def resolve_product_codes(self, info, table):
+    def resolve_product_codes(parent, info, table):
         """ Fetches all product codes from the database for display in the model admin
         page.
         """
@@ -87,7 +75,7 @@ class CreateProductCode(Mutation):
     product_code = Field(ProductCode)
 
     @jwt_required
-    def mutate(self, info, table, name, code):
+    def mutate(root, info, table, name, code):
         """ Adds a single new model instance to the database
         """
 
@@ -110,7 +98,7 @@ class TokenAuth(Mutation):
 
     token = Field(Token)
 
-    def mutate(self, info, id_token):
+    def mutate(root, info, id_token):
         """ Creates JWT token from google user data received from the front end.
         """
 

@@ -1,0 +1,8 @@
+runtime: python38
+entrypoint: gunicorn -b :$PORT run:app
+
+vpc_access_connector:
+  name: "projects/studied-union-283419/locations/us-central1/connectors/rpb-db-connector"
+
+env_variables:
+  SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://dbuser:rpbprojectpassworddb@172.19.0.3:5432/rpbserialdb
