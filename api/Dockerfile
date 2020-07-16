@@ -31,5 +31,5 @@ COPY . .
 # Run Commands
 EXPOSE 5000
 ENTRYPOINT ["/opt/api/cmds/entrypoint.sh"]
-# CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
-CMD ["gunicorn", "--user=apiuser", "--bind=0.0.0.0:5000", "run:app"]
+CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]
+# CMD ["gunicorn", "--user=apiuser", "--bind=0.0.0.0:5000", "run:app"]

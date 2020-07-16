@@ -44,11 +44,11 @@ function ModelAdmin(props) {
     }
     axios({
       method: "post",
-      url: "https://studied-union-283419.uc.r.appspot.com/graphql",
+      url: "http://localhost:5000/graphql",
       data: data,
       headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
     }).then((response) => {
-      console.log(response)
+      console.log(response);
       setModelCodes(response.data.data.productCodes);
     });
   }, []);
@@ -69,14 +69,14 @@ function ModelAdmin(props) {
     }
     axios({
       method: "post",
-      url: "https://studied-union-283419.uc.r.appspot.com/graphql",
+      url: "http://localhost:5000/graphql",
       data: data,
       headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
     })
       .then((response) => {
         setModelCodes((modelCodes) => {
-          console.log(response)
-          modelCodes.concat(response.data.data.createProductCode.productCode)
+          console.log(response);
+          modelCodes.concat(response.data.data.createProductCode.productCode);
         });
       })
       .catch(() => {

@@ -22,7 +22,7 @@ function Login(props) {
 
   function postLogin(userInfo) {
     axios
-      .post("https://studied-union-283419.uc.r.appspot.com/graphql", {
+      .post("http://localhost:5000/graphql", {
         query: `
       mutation {
         tokenAuth(idToken: ${JSON.stringify(userInfo.tokenId)}) {

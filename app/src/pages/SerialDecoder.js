@@ -31,16 +31,16 @@ function SerialDecoder(props) {
     }
     await axios({
       method: "post",
-      url: "https://studied-union-283419.uc.r.appspot.com/graphql",
+      url: "http://localhost:5000/graphql",
       data: data,
-      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` }
     })
-      .then((response) => {
-        setproducts(response.data.data.productsFromSerials);
-      })
-      .then(() => {
-        setShowResults(true);
-      });
+    .then((response) => {
+      setproducts(response.data.data.productsFromSerials)
+    })
+    .then(() => {
+      setShowResults(true)
+    })
   }
 
   return (
