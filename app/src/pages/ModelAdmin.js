@@ -44,13 +44,13 @@ function ModelAdmin(props) {
     }
     axios({
       method: "post",
-      url: "http://localhost:5000/graphql",
+      url: "https://studied-union-283419.uc.r.appspot.com/graphql",
       data: data,
-      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` }
-    })
-    .then((response) => {
-      setModelCodes(response.data.data.productCodes)
-    })
+      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+    }).then((response) => {
+      console.log(response)
+      setModelCodes(response.data.data.productCodes);
+    });
   }, []);
 
   const handleSubmit = (event) => {
@@ -69,18 +69,19 @@ function ModelAdmin(props) {
     }
     axios({
       method: "post",
-      url: "http://localhost:5000/graphql",
+      url: "https://studied-union-283419.uc.r.appspot.com/graphql",
       data: data,
-      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` }
+      headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
     })
-    .then((response) => {
-      setModelCodes(modelCodes => modelCodes.concat(
-        response.data.data.createProductCode.productCode
-        ))
-    })
-    .catch(() => {
-      handleModalOpen();
-    })
+      .then((response) => {
+        setModelCodes((modelCodes) => {
+          console.log(response)
+          modelCodes.concat(response.data.data.createProductCode.productCode)
+        });
+      })
+      .catch(() => {
+        handleModalOpen();
+      });
   }
 
   const handleModalOpen = () => {

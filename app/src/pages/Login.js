@@ -21,8 +21,9 @@ function Login(props) {
   }
 
   function postLogin(userInfo) {
-    axios.post("http://localhost:5000/graphql", {
-      query: `
+    axios
+      .post("https://studied-union-283419.uc.r.appspot.com/graphql", {
+        query: `
       mutation {
         tokenAuth(idToken: ${JSON.stringify(userInfo.tokenId)}) {
           token {
@@ -30,18 +31,19 @@ function Login(props) {
           }
         }
       }
-      `
-    }).then((response) => {
+      `,
+      })
+      .then((response) => {
         Cookies.set(
           "accessToken",
           response.data.data.tokenAuth.token.accessToken,
           { expires: 1 }
         );
-        setLoggedIn(true)
-    })
-     .catch(e => {
-      setIsError(true);
-    });
+        setLoggedIn(true);
+      })
+      .catch((e) => {
+        setIsError(true);
+      });
   }
 
   if (isLoggedIn) {
